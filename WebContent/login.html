@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="layui-v2.4.5/css/layui.css">
+</head>
+<body>
+	
+		<div style="width: 500px; position:absolute;top: 50px;left: 100px ">
+			
+			<div class="layui-form-item">
+			<span id="yanzheng"   style="color: red;"></span>
+				<label class="layui-form-label">账号框</label>
+				<div class="layui-input-block">
+					<input id="username" name="username" class="layui-input" type="text"
+						placeholder="请输入账号" autocomplete="off" lay-verify="title" required="required">
+						<span id="unameMsg"   style="color: red;"></span>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">密码框</label>
+				<div class="layui-input-block">
+					<input id="password" name="password" class="layui-input" type="password"
+						placeholder="请输入密码" autocomplete="off" required="required">
+						<span id="pwdMsg" style="color: red;"></span>
+				</div>
+			</div>
+
+
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-filter="demo1" onclick="login()">登录</button>
+				</div>
+				<div class="layui-input-block" style="position: relative;left: 20%;top:-38px">
+					<button class="layui-btn" lay-filter="demo1" onclick="regist()">
+						注册
+					</button>
+				</div>
+			</div>
+
+		</div>
+
+</body>
+<script  src="layui-v2.4.5/layui.all.js"></script>
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+
+<script>
+    /**
+     * 注册
+     */
+    function regist() {
+        // 如果需要在新窗口打开注册界面；
+        // window.open('Untitled-2.html');
+        // 如果需要在当前窗口打开登录界面
+        window.location.href = 'registr.html';
+    }
+    
+    function login() {
+    	var username=document.getElementById("username");
+    	var password=document.getElementById("password");
+    	var unameMsg=document.getElementById("unameMsg");
+    	
+    	$.ajax({
+			type:"post",
+			url:"nb",
+			async:false,
+			data:"username="+username.value+"&password="+password.value,
+			success:function(id){
+				if(id != 0){
+					 window.location.href = 'adduser.html';
+				}else{
+					yanzheng.innerHTML="*用户名或密码错误";
+				}
+			}
+		})
+    }
+</script>
+<script type="text/javascript">
+$(function(){
+	$("#username").blur(function(){
+		dianji();
+	});
+	
+	function dianji(){
+		var uname=$("#username").val();
+		var $unameMsg=$("#unameMsg");
+		if(uname.length == 0){
+			$unameMsg.text("账号不能为空");
+		}else{
+			$unameMsg.text("账号格式正确");
+		}
+	}
+	
+	$("#password").blur(function() {
+		dianji02();
+	});
+	
+	function dianji02(){
+		var pwd=$("#password").val();
+		var $pwdMsg=$("#pwdMsg");
+		if(pwd.length == 0){
+			$pwdMsg.text("密码不能为空");
+		}else{
+			$pwdMsg.text("密码格式正确");
+		}
+	}
+	
+	
+	})
+</script>
+</html>

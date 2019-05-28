@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="layui-v2.4.5/css/layui.css">
+</head>
+<body>
+	<form class="layui-form" action="wm" method="get" lay-filter="example">
+		<div style="width: 500px; position:absolute;top: 50px;left: 100px ">
+
+			<div class="layui-form-item">
+				<label class="layui-form-label">账号框</label>
+				<div class="layui-input-block">
+					<input id="username" name="username" class="layui-input" type="text"
+						placeholder="请输入账号" autocomplete="off" lay-verify="title" required="required">
+						<span id="uname" style="color: red;"></span>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">密码框</label>
+				<div class="layui-input-block">
+					<input name="password" class="layui-input" type="password"
+						placeholder="请输入密码" id="mima" autocomplete="off" required="required">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">再次输入密码框</label>
+				<div class="layui-input-block">
+					<input name="password02" class="layui-input" type="password"
+						placeholder="请再次输入密码" autocomplete="off" required="required" id="yanzheng" >
+						<span id="tishi"></span>
+				</div>
+			</div>
+
+
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-filter="demo1" lay-submit="">注册</button>
+				</div>
+			</div>
+
+		</div>
+	</form>
+</body>
+<script src="layui-v2.4.5/layui.all.js"></script>
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script>
+	var pwd02=document.getElementById("yanzheng");
+	var pwd=document.getElementById("mima");
+	var username=document.getElementById("username");
+	var uname=document.getElementById("uname");
+	var tishi=document.getElementById("tishi");
+	var check = true;
+	
+	username.onchange=function(){
+		uname.innerHTML="";
+		if(pwd.value != null){
+			$.ajax({
+				type:"post",
+				url:"ny",
+				async:false,
+				data:"name="+username.value,
+				success:function(id){
+					if(id > 0){
+						uname.innerHTML="*用户名以存在";
+						check =  false;//阻止提交事件触发
+					}else{
+						uname.innerHTML="*用户名可以使用";
+					}
+				}
+			})
+		
+		}else{
+			uname.innerHTML="*不能为空";
+			check =  false;//阻止提交事件触发
+		}
+	};
+
+	pwd02.onchange=function(){
+		tishi.innerHTML="";
+		if(pwd.value == pwd02.value){
+			tishi.innerHTML="*密码相同";
+		}else{
+			tishi.innerHTML="*密码不相同";
+			check =  false;//阻止提交事件触发
+		}
+	};
+</script>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="layui-v2.4.5/css/layui.css">
+</head>
+<body>
+	<form class="layui-form" action="wd" method="get" lay-filter="example">
+		<div style="font-size: 50px;position:absolute;top: 50px;left: 40% "">填写用户信息</div>
+		<div style="width: 500px; position:absolute;top: 200px;left: 30% ">
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">昵称</label>
+				<div class="layui-input-block">
+					<input name="info_nickname" class="layui-input" type="text"
+						placeholder="请输入昵称" autocomplete="off" lay-verify="title" required="required">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">手机号码</label>
+				<div class="layui-input-block">
+					<input name="info_phone" class="layui-input" type="test"
+						placeholder="请输入手机号码"  autocomplete="off" required="required">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">邮箱</label>
+				<div class="layui-input-block">
+					<input name="info_email" class="layui-input" type="email"
+						placeholder="请输入邮箱" autocomplete="off" required="required"  >
+						<span id="tishi"></span>
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">性别</label>
+				<div class="layui-input-block">
+					<input name="info_gender" class="layui-input" type="radio"
+						 autocomplete="off" required="required"  value="0">男
+						 <input name="info_gender" class="layui-input" type="radio"
+						 autocomplete="off" required="required"  value="1">女
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">地址</label>
+				<div class="layui-input-block">
+					<input name="info_address" class="layui-input" type="test"
+						placeholder="请输入地址" autocomplete="off" required="required"  >
+						<span id="tishi"></span>
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-filter="demo1" lay-submit="">提交</button>
+				</div>
+			</div>
+
+		</div>
+	</form>
+</body>
+<script src="layui-v2.4.5/layui.all.js"></script>
+</html>
