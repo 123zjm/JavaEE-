@@ -1,4 +1,7 @@
 package com.zjm.dao;
+
+import com.zjm.entity.User_info;
+
 /**
  * 用户提交信息数据库接口
  * @author zjm
@@ -17,4 +20,17 @@ public interface User_infoDao {
 	 * @throws Exception
 	 */
 	int insertUsers(String info_nickname,String info_phone,String info_email,Integer info_gender,String info_address,Integer user_id) throws Exception;
+	/**
+	 * 获得用户id数据库接口
+	 * @param user_name
+	 * @return
+	 */
+	int selectUser_id(String user_name)throws Exception;
+	/**
+	 * 获取指定用户的信息
+	 * @param user_name
+	 * @return
+	 * @throws Exception
+	 */
+	User_info selectUser_info(String user_name)throws Exception;
 }

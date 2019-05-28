@@ -2,6 +2,7 @@ package com.zjm.service.serviceImpl;
 
 import com.zjm.dao.User_infoDao;
 import com.zjm.dao.daoImpl.User_infoDaoImpl;
+import com.zjm.entity.User_info;
 import com.zjm.service.User_infoService;
 
 public class User_infoServiceImpl implements User_infoService{
@@ -22,6 +23,32 @@ public class User_infoServiceImpl implements User_infoService{
 			e.printStackTrace();
 		}
 		return insertUsers;
+	}
+
+	@Override
+	public int getUser_id(String user_name) {
+		// TODO Auto-generated method stub
+		int selectUser_id=0;
+		try {
+			selectUser_id = uid.selectUser_id(user_name);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return selectUser_id;
+	}
+
+	@Override
+	public User_info getUser_info(String user_name) {
+		// TODO Auto-generated method stub
+		User_info selectUser_info=null;
+		try {
+			selectUser_info = uid.selectUser_info(user_name);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return selectUser_info;
 	}
 	
 }

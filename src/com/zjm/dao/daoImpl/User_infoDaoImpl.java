@@ -2,8 +2,10 @@ package com.zjm.dao.daoImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import com.zjm.dao.User_infoDao;
+import com.zjm.entity.User_info;
 import com.zjm.util.JDBCUtile;
 
 public class User_infoDaoImpl implements User_infoDao{
@@ -23,6 +25,41 @@ public class User_infoDaoImpl implements User_infoDao{
 		int eu = pste.executeUpdate();
 		JDBCUtile.closeAll(null, pste, conn);
 		return eu;
+	}
+
+	@Override
+	public int selectUser_id(String user_name) throws Exception {
+		Connection conn = JDBCUtile.getConn();
+		PreparedStatement pste = conn.prepareStatement("SELECT user_id FROM users WHERE user_name=? ");
+		pste.setString(1, user_name);
+		ResultSet rs = pste.executeQuery();
+		if(rs.next()) {
+			int id = rs.getInt("user_id");
+			JDBCUtile.closeAll(rs, pste, conn);
+			return id;
+		}
+		JDBCUtile.closeAll(rs, pste, conn);
+		return 0;
+	}
+
+	@Override
+	public User_info selectUser_info(String user_name) throws Exception {
+		Connection conn = JDBCUtile.getConn();
+		PreparedStatement pste = conn.prepareStatement("SELECT * FROM user_info WHERE user_name=? ");
+		pste.setString(1, user_name);
+		ResultSet rs = pste.executeQuery();
+		User_info uiInfo=new User_info();
+		if(rs.next()) {
+			uiInfo.setInfo_address(rs.getString("info_address"));
+			uiInfo.setInfo_email(rs.getString("info_email"));
+			uiInfo.setInfo_gender(rs.getInt("info_gender"));
+			uiInfo.setInfo_nickname(rs.getString("info_nickname"));
+			uiInfo.setInfo_phone(rs.getString("info_phone"));
+			JDBCUtile.closeAll(rs, pste, conn);
+			return uiInfo;
+		}
+		JDBCUtile.closeAll(rs, pste, conn);
+		return uiInfo;
 	}
 
 }
