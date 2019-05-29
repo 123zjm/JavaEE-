@@ -68,8 +68,22 @@ $().ready(function(){
 					type:"get",
 					url:"wr",
 					async:false,
-					success:function(user_info){
-						
+					success:function(data){
+						var a=$.parseJSON(data);
+						$("#name").text(a.info_nickname);
+						$("#phone").text(a.info_phone);
+						$("#emile").text(a.info_email);
+						$("#gende").text(a.info_gender);
+						$("#address").text(a.info_address);
+						<!--
+						var a=new array();
+						 a= data.spil(",");
+						$("#name").text(a[0]);
+						$("#phone").text(a[1]);
+						$("#emile").text(a[2]);
+						$("#gende").text(a[3]);
+						$("#address").text(a[4]);
+						-->
 					}
 				})
 			}

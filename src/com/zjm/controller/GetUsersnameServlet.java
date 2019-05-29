@@ -24,8 +24,11 @@ public class GetUsersnameServlet extends HttpServlet{
 		PrintWriter writer = resp.getWriter();
 		HttpSession session = req.getSession();
 		Users users = (Users) session.getAttribute("users");
-		System.out.println(users);
-		String user_name = users.getUser_name();
-		writer.print(user_name);
+		if(users==null) {
+			resp.sendRedirect("login.html");
+		}else {
+			String user_name = users.getUser_name();
+			writer.print(user_name);
+		}
 	}
 }

@@ -1,5 +1,7 @@
 package com.zjm.service;
 
+import java.util.List;
+
 import com.zjm.entity.User_info;
 
 public interface User_infoService {
@@ -28,4 +30,11 @@ public interface User_infoService {
 	 * @throws Exception
 	 */
 	User_info getUser_info(String user_name);
+	/**
+	 * 获取全部用户的信息功能的接口
+	 * @param user_name
+	 * @return
+	 * @throws Exception
+	 */
+	List<User_info> selectUser_info();
 }

@@ -70,4 +70,15 @@
   <url-pattern>/wr</url-pattern>
   </servlet-mapping>
   
+  
+  <servlet>
+  	<servlet-name>rr</servlet-name>
+  	<servlet-class>com.zjm.controller.ServiceSerlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>rr</servlet-name>
+  <url-pattern>/table</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>

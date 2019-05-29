@@ -1,5 +1,7 @@
 package com.zjm.dao;
 
+import java.util.List;
+
 import com.zjm.entity.User_info;
 
 /**
@@ -27,10 +29,17 @@ public interface User_infoDao {
 	 */
 	int selectUser_id(String user_name)throws Exception;
 	/**
-	 * 获取指定用户的信息
+	 * 获取指定用户的信息的数据接口
 	 * @param user_name
 	 * @return
 	 * @throws Exception
 	 */
 	User_info selectUser_info(String user_name)throws Exception;
+	/**
+	 * 获取全部用户的信息的数据接口
+	 * @param user_name
+	 * @return
+	 * @throws Exception
+	 */
+	List<User_info> selectUser_info()throws Exception;
 }

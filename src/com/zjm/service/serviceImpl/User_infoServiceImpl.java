@@ -1,5 +1,7 @@
 package com.zjm.service.serviceImpl;
 
+import java.util.List;
+
 import com.zjm.dao.User_infoDao;
 import com.zjm.dao.daoImpl.User_infoDaoImpl;
 import com.zjm.entity.User_info;
@@ -44,6 +46,19 @@ public class User_infoServiceImpl implements User_infoService{
 		User_info selectUser_info=null;
 		try {
 			selectUser_info = uid.selectUser_info(user_name);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return selectUser_info;
+	}
+
+	@Override
+	public List<User_info> selectUser_info() {
+		// TODO Auto-generated method stub
+		List<User_info> selectUser_info=null;
+		try {
+			selectUser_info = uid.selectUser_info();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
