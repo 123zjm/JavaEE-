@@ -37,4 +37,22 @@ public interface User_infoService {
 	 * @throws Exception
 	 */
 	List<User_info> selectUser_info();
+	/**
+	 * 获取用户状态
+	 * @return
+	 */
+	List  getUser_type();
+	
+	/**
+	 * 更改用户状态
+	 * @return
+	 * @throws Exception
+	 */
+	int changeUser_type(String user_name,int user_type) ;
+	/**
+	 * 查询用户状态
+	 * @return
+	 * @throws Exception
+	 */
+	int getUser_type(String user_name) ;
 }

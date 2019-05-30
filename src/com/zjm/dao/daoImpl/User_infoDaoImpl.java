@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.zjm.dao.User_infoDao;
+import com.zjm.entity.User;
 import com.zjm.entity.User_info;
 import com.zjm.util.JDBCUtile;
 
@@ -84,6 +85,59 @@ public class User_infoDaoImpl implements User_infoDao{
 		}
 		JDBCUtile.closeAll(rs, pste, conn);
 		return li;
+	}
+
+	@Override
+	public List findUsers_type() throws Exception {
+		// TODO Auto-generated method stub
+		Connection conn = JDBCUtile.getConn();
+		PreparedStatement pste = conn.prepareStatement("SELECT  ui.info_address,ui.info_email,ui.info_gender,ui.info_nickname,ui.info_phone,us.user_type FROM users us RIGHT JOIN user_info ui on us.user_id=ui.user_id");
+		ResultSet rs = pste.executeQuery();
+		List li =new ArrayList();
+		User us=null;
+		while (rs.next()) {
+			us=new User();
+			us.setInfo_address(rs.getString("info_address"));
+			us.setInfo_email(rs.getString("info_email"));
+			us.setInfo_gender(rs.getInt("info_gender"));
+			us.setInfo_nickname(rs.getString("info_nickname"));
+			us.setInfo_phone(rs.getString("info_phone"));
+			us.setUser_type(rs.getInt("user_type"));
+			li.add(us);
+		
+		}
+		JDBCUtile.closeAll(rs, pste, conn);
+		return li;
+	}
+
+	@Override
+	public int updateUser_type(String user_name,int user_type) throws Exception {
+		Connection conn = JDBCUtile.getConn();
+		if(user_type == 0) {
+			user_type =1;
+		}else {
+			user_type =0;
+		}
+		PreparedStatement pste = conn.prepareStatement("UPDATE users  SET  user_type=? WHERE user_id=(select user_id from user_info where info_nickname = ?)");
+		pste.setInt(1, user_type);
+		pste.setString(2, user_name);
+		int eu = pste.executeUpdate();
+		JDBCUtile.closeAll(null, pste, conn);
+		return eu;
+	}
+
+	@Override
+	public int selectUser_type(String user_name) throws Exception {
+		Connection conn = JDBCUtile.getConn();
+		PreparedStatement pste = conn.prepareStatement("SELECT user_type FROM users where user_id=(select user_id from user_info where info_nickname = ?)");
+		pste.setString(1, user_name);
+		ResultSet rs = pste.executeQuery();
+		int a=0;
+		if (rs.next()) {
+			a=rs.getInt("user_type");
+		}
+		JDBCUtile.closeAll(rs, pste, conn);
+		return a;
 	}
 
 }

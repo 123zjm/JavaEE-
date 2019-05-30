@@ -65,5 +65,44 @@ public class User_infoServiceImpl implements User_infoService{
 		}
 		return selectUser_info;
 	}
+
+	@Override
+	public List getUser_type() {
+		// TODO Auto-generated method stub
+		List selectUser_type =null;
+		try {
+			selectUser_type = uid.findUsers_type();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return selectUser_type;
+	}
+
+	@Override
+	public int changeUser_type(String user_name, int user_type)  {
+		// TODO Auto-generated method stub
+		int updateUser_type=0;
+		try {
+			updateUser_type = uid.updateUser_type(user_name, user_type);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return updateUser_type;
+	}
+
+	@Override
+	public int getUser_type(String user_name)  {
+		// TODO Auto-generated method stub
+		int selectUser_type=0;
+		try {
+			 selectUser_type = uid.selectUser_type(user_name);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return selectUser_type;
+	}
 	
 }

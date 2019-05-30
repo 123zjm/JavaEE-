@@ -77,7 +77,7 @@
   </servlet>
   <servlet-mapping>
   <servlet-name>rr</servlet-name>
-  <url-pattern>/table</url-pattern>
+  <url-pattern>/table/*</url-pattern>
   </servlet-mapping>
   
   

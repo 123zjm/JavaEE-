@@ -42,4 +42,22 @@ public interface User_infoDao {
 	 * @throws Exception
 	 */
 	List<User_info> selectUser_info()throws Exception;
+	/**
+	 * 获取用户的状态
+	 * @return
+	 * @throws Exception
+	 */
+	List findUsers_type() throws Exception;
+	/**
+	 * 更改用户状态
+	 * @return
+	 * @throws Exception
+	 */
+	int updateUser_type(String user_name,int user_type) throws Exception;
+	/**
+	 * 查询用户状态
+	 * @return
+	 * @throws Exception
+	 */
+	int selectUser_type(String user_name) throws Exception;
 }
