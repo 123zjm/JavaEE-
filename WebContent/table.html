@@ -11,11 +11,11 @@
 </head>
 
 <body>
-
+	<div><button id="delete">删除</button></div><div><button id="update">修改</button></div>
 	<table id="table">
-		<tr><td width="100px">昵称</td><td width="100px">电话</td><td width="100px">邮箱</td><td width="100px">性别</td><td width="100px">地址</td><td width="100px">操作</td></tr>
+		<tr><td><input type=checkbox id="input" checked ></td><td field=ck checkbox=true></td><td width="100px">昵称</td><td width="100px">电话</td><td width="100px">邮箱</td><td width="100px">性别</td><td width="100px">地址</td><td width="100px">操作</td></tr>
 	</table>
-              
+     
           
 
 
@@ -27,6 +27,7 @@
 
 <script type="text/javascript">
 $(function(){
+		//导入数据
 		$.ajax({
 			type:"get",
 			url:"table/get",
@@ -35,29 +36,89 @@ $(function(){
 				var a=$.parseJSON(data);
 				for(var b=0;b<a.length;b++){
 					if(a[b].user_type == 1){
-						$("#table").append("<tr><td>"+a[b].info_nickname+"</td><td>"+a[b].info_phone+"</td><td>"+a[b].info_email+"</td><td>"+a[b].info_gender+"</td><td>"+a[b].info_address+"</td><td><button class= 'id'>禁用</button></td></tr>")
+						$("#table").append("<tr><td><input type=checkbox  class=dochange value="+a[b].info_nickname+"></td><td>"+a[b].info_nickname+"</td><td>"+a[b].info_phone+"</td><td>"+a[b].info_email+"</td><td>"+a[b].info_gender+"</td><td>"+a[b].info_address+"</td><td><button class= 'id'>禁用</button></td></tr>")
 					}else{
-						$("#table").append("<tr><td>"+a[b].info_nickname+"</td><td>"+a[b].info_phone+"</td><td>"+a[b].info_email+"</td><td>"+a[b].info_gender+"</td><td>"+a[b].info_address+"</td><td><button class= 'id'>启用</button></td></tr>")
+						$("#table").append("<tr><td><input type=checkbox  class=dochange value="+a[b].info_nickname+"></td><td >"+a[b].info_nickname+"</td><td>"+a[b].info_phone+"</td><td>"+a[b].info_email+"</td><td>"+a[b].info_gender+"</td><td>"+a[b].info_address+"</td><td><button class= 'id'>启用</button></td></tr>")
 					}
 				}
 			}
 		})
-		
+		//禁用和启用的刷新
 		$(".id").on('click', function(){
-			var username=$(this).parent().parent().children().first().html();
+			var username=$(this).parent().parent().children().first().next().html();
 			$.ajax({
 				type:"get",
 				url:"table/change",
 				data:"username="+username,
 				async:false,
 				success:function(data){
-					window.location.replace();
+					//window.location.replace();js页面刷新
+					  window.location.href = 'table.html';
 				}
 			})
 		});
+		//全选，反选
+		$("#input").on('click', function(){
+			if($("#input").attr("checked")=="checked"){
+				$("input[type='checkbox']").prop("checked", function( i, val ) {
+					  return !val;
+					});
+			}
+		});
+		//点击删除按钮，删除指定数据
+		$("#delete").click(function () {
+			//遍历
+			$(".dochange").each(function() {
+				if($(this).prop("checked")==true){
+					var username=$(this).parent().parent().children().first().next().html();
+					$.ajax({
+						type:"get",
+						url:"table/dele",
+						data:"username="+username,
+						async:false,
+						success:function(data){
+							//window.location.replace();js页面刷新
+							if(data>0){
+								window.location.href = 'table.html';}
+							}
+					})
+				}
+			})
+		});
+	
+		//点击修改按钮，修改指定数据
+		$("#update").click(function () {
+		
+		
+			$(".dochange").each(function() {
+				if($(this).prop("checked")==true){
+					var username=$(this).parent().parent().children().first().next().html();
+					$.ajax({
+						type:"get",
+						url:"table/update",
+						data:"username="+username,
+						async:false,
+						success:function(data){
+							//window.location.replace();js页面刷新
+							if(data == 1 ){
+								window.location.href = 'update.html';
+							}
+						}
+					})
+					}
+			
+			})
+			
+		});
+		
+	
+		
+		
+		
+		
 	})
 	
-
+	
 
 </script>
 

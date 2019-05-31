@@ -60,4 +60,22 @@ public interface User_infoDao {
 	 * @throws Exception
 	 */
 	int selectUser_type(String user_name) throws Exception;
+	/**
+	 * 删除用户
+	 * @param user_name
+	 * @return
+	 * @throws Exception
+	 */
+	int delectUser_info(String user_name)throws Exception;
+	/**
+	 * 更改用户
+	 * @param info_nickname
+	 * @param info_phone
+	 * @param info_email
+	 * @param info_gender
+	 * @param info_address
+	 * @return
+	 * @throws Exception
+	 */
+	int updateUser_info(String info_nickname,String info_phone,String info_email,Integer info_gender,String info_address)throws Exception;
 }

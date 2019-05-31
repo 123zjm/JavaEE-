@@ -104,5 +104,32 @@ public class User_infoServiceImpl implements User_infoService{
 		}
 		return selectUser_type;
 	}
+
+	@Override
+	public int removeUser_info(String user_name) {
+		// TODO Auto-generated method stub
+		int delectUser_info=0;
+		try {
+			delectUser_info = uid.delectUser_info(user_name);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return delectUser_info;
+	}
+
+	@Override
+	public int changeUser_info(String info_nickname, String info_phone, String info_email, Integer info_gender,
+			String info_address) {
+		int updateUser_info=0;
+		try {
+			 updateUser_info = uid.updateUser_info(info_nickname, info_phone, info_email, info_gender, info_address);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return updateUser_info;
+	}
 	
 }

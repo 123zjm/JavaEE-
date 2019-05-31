@@ -55,4 +55,20 @@ public interface User_infoService {
 	 * @throws Exception
 	 */
 	int getUser_type(String user_name) ;
+	/**
+	 * 删除用户
+	 * @param user_name
+	 * @return
+	 */
+	int removeUser_info(String user_name);
+	/**
+	 * 更改信息
+	 * @param info_nickname
+	 * @param info_phone
+	 * @param info_email
+	 * @param info_gender
+	 * @param info_address
+	 * @return
+	 */
+	int changeUser_info(String info_nickname,String info_phone,String info_email,Integer info_gender,String info_address);
 }

@@ -48,9 +48,8 @@ public class User_infoDaoImpl implements User_infoDao{
 	@Override
 	public User_info selectUser_info(String user_name) throws Exception {
 		Connection conn = JDBCUtile.getConn();
-		int selectUser_id = this.selectUser_id(user_name);
-		PreparedStatement pste = conn.prepareStatement("SELECT * FROM user_info WHERE user_id=? ");
-		pste.setInt(1, selectUser_id);
+		PreparedStatement pste = conn.prepareStatement("SELECT * FROM user_info WHERE info_nickname=? ");
+		pste.setString(1, user_name);
 		ResultSet rs = pste.executeQuery();
 		User_info uiInfo=new User_info();
 		if(rs.next()) {
@@ -138,6 +137,34 @@ public class User_infoDaoImpl implements User_infoDao{
 		}
 		JDBCUtile.closeAll(rs, pste, conn);
 		return a;
+	}
+
+	@Override
+	public int delectUser_info(String user_name) throws Exception {
+		// TODO Auto-generated method stub
+		Connection conn = JDBCUtile.getConn();
+		PreparedStatement pste = conn.prepareStatement("DELETE from user_info where info_nickname=?");
+		pste.setString(1, user_name);
+		int eu = pste.executeUpdate();
+		JDBCUtile.closeAll(null, pste, conn);
+		return eu;
+	}
+
+	@Override
+	public int updateUser_info(String info_nickname, String info_phone, String info_email, Integer info_gender,
+			String info_address) throws Exception {
+		// TODO Auto-generated method stub
+		Connection conn = JDBCUtile.getConn();
+		PreparedStatement pste = conn.prepareStatement("update user_info set info_nickname=?,info_phone=?,info_email=?,info_gender=?,info_address=? where info_nickname=?");
+		pste.setString(1, info_nickname);
+		pste.setString(2, info_phone);
+		pste.setString(3, info_email);
+		pste.setInt(4, info_gender);
+		pste.setString(5, info_address);
+		pste.setString(6, info_nickname);
+		int executeUpdate = pste.executeUpdate();
+		JDBCUtile.closeAll(null, pste, conn);
+		return executeUpdate;
 	}
 
 }

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="layui-v2.4.5/css/layui.css">
+</head>
+<body>
+		<div style="font-size: 30px;position:absolute;top: 20px;left: 40% ">欢迎您：<spen id="yonghu"></spen></div>
+		<div style="font-size: 50px;position:absolute;top: 50px;left: 40% ">填写用户信息</div>
+		<div style="width: 500px; position:absolute;top: 200px;left: 30% ">
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">昵称</label>
+				<div class="layui-input-block">
+					<input type="text" id="name">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">手机号码</label>
+				<div class="layui-input-block">
+				<input type="text" id="phone">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">邮箱</label>
+				<div class="layui-input-block">
+					<input type="text" id="emile">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">性别</label>
+				<div class="layui-input-block">
+				<input type="text" id="gende">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">地址</label>
+				<div class="layui-input-block">
+						<input type="text" id="address">
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-filter="demo1" id="add">修改</button>
+				</div>
+			</div>
+		</div>
+</body>
+<script src="layui-v2.4.5/layui.all.js"></script>
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script>
+$().ready(function(){
+	$.ajax({
+		type:"post",
+		url:"table/",
+		async:false,
+		success:function(username){
+			if(username != null){
+				$.ajax({
+					type:"get",
+					url:"table/add",
+					async:false,
+					// success:function(data,ms){} ajax可以返回多个数据，按位置判断响应值
+					success:function(data){
+						var a=$.parseJSON(data);
+						$("#yonghu").text(a.info_nickname+"用户");
+						$("#name").val(a.info_nickname);
+						$("#phone").val(a.info_phone);
+						$("#emile").val(a.info_email);
+						$("#gende").val(a.info_gender);
+						$("#address").val(a.info_address);
+						
+						//var a=new array();
+						// a= data.spil(",");
+						//$("#name").text(a[0]);
+						//$("#phone").text(a[1]);
+						//$("#emile").text(a[2]);
+						//$("#gende").text(a[3]);
+						//$("#address").text(a[4]);
+				
+					}
+				})
+			}else{
+				window.location.href = 'login.html';
+			}
+		}
+	})
+	})
+	
+	$("#add").click(function () {
+		var info_nickname=$("#name").val();
+		var info_phone= $("#phone").val();
+		var info_email=$("#emile").val();
+		var info_gender=$("#gende").val();
+		var info_address=$("#address").val();
+		$.ajax({
+			type:"get",
+			url:"table/addchange",
+			data:"info_nickname="+info_nickname+"&info_phone="+info_phone+"&info_email="+info_email+"&info_gender="+info_gender+"&info_address="+info_address,
+			async:false,
+			// success:function(data,ms){} ajax可以返回多个数据，按位置判断响应值
+			success:function(data){
+				if(data>0){
+					window.location.href = 'table.html';
+				}
+			}
+		})
+		
+	});
+</script>
+</html>
