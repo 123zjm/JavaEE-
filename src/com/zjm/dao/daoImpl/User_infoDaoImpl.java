@@ -12,6 +12,7 @@ import com.zjm.entity.User_info;
 import com.zjm.util.JDBCUtile;
 
 public class User_infoDaoImpl implements User_infoDao{
+	static int Size=5;
 
 	@Override
 	public int insertUsers(String info_nickname, String info_phone, String info_email, Integer info_gender,
@@ -87,10 +88,13 @@ public class User_infoDaoImpl implements User_infoDao{
 	}
 
 	@Override
-	public List findUsers_type() throws Exception {
+	public List findUsers_type(int size) throws Exception {
 		// TODO Auto-generated method stub
+		int se=(size-1)*Size;
 		Connection conn = JDBCUtile.getConn();
-		PreparedStatement pste = conn.prepareStatement("SELECT  ui.info_address,ui.info_email,ui.info_gender,ui.info_nickname,ui.info_phone,us.user_type FROM users us RIGHT JOIN user_info ui on us.user_id=ui.user_id");
+		PreparedStatement pste = conn.prepareStatement("SELECT  ui.info_address,ui.info_email,ui.info_gender,ui.info_nickname,ui.info_phone,us.user_type FROM users us RIGHT JOIN user_info ui on us.user_id=ui.user_id limit ?,?");
+		pste.setInt(1, se);
+		pste.setInt(2, Size);
 		ResultSet rs = pste.executeQuery();
 		List li =new ArrayList();
 		User us=null;
@@ -165,6 +169,20 @@ public class User_infoDaoImpl implements User_infoDao{
 		int executeUpdate = pste.executeUpdate();
 		JDBCUtile.closeAll(null, pste, conn);
 		return executeUpdate;
+	}
+
+	@Override
+	public int selectPageSize() throws Exception {
+		int PageCount=0;
+		int PageSize=0;
+		Connection conn = JDBCUtile.getConn();
+		PreparedStatement pste = conn.prepareStatement("select count(*) as count from user_info");
+		ResultSet eqResultSet = pste.executeQuery();
+		if(eqResultSet.next()) {
+			PageCount=eqResultSet.getInt("count");
+			 PageSize=PageCount%Size == 0? PageCount/Size:PageCount/Size+1;
+		}
+		return PageSize;
 	}
 
 }

@@ -49,7 +49,8 @@ public class ServiceSerlet extends HttpServlet{
 			sb.append("}");
 			writer.print(sb);
 		}else if ("get".equals(operation)) {
-			List user_type = ui.getUser_type();
+			int size=Integer.parseInt(req.getParameter("size"));
+			List user_type = ui.getUser_type(size);
 			String jsnList = om.writeValueAsString(user_type);
 			writer.print(jsnList);
 		}else if ("change".equals(operation)) {
@@ -88,6 +89,13 @@ public class ServiceSerlet extends HttpServlet{
 			String info_address=req.getParameter("info_address");
 			int changeUser_info = ui.changeUser_info(info_nickname, info_phone, info_email, info_gender, info_address);
 			writer.print(changeUser_info);
+		}else if ("getPageSize".equals(operation)) {
+			int pageSize = ui.getPageSize();
+			if(pageSize > 0) {
+				writer.print(pageSize);
+			}else {
+				writer.print("数据异常");
+			}
 		}
 	}
 }	

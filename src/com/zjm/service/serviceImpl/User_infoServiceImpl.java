@@ -67,11 +67,11 @@ public class User_infoServiceImpl implements User_infoService{
 	}
 
 	@Override
-	public List getUser_type() {
+	public List getUser_type(int size) {
 		// TODO Auto-generated method stub
 		List selectUser_type =null;
 		try {
-			selectUser_type = uid.findUsers_type();
+			selectUser_type = uid.findUsers_type(size);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -130,6 +130,18 @@ public class User_infoServiceImpl implements User_infoService{
 		}
 		
 		return updateUser_info;
+	}
+
+	@Override
+	public int getPageSize() {
+		int PageSize=0;
+		try {
+			 PageSize = uid.selectPageSize();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return PageSize;
 	}
 	
 }

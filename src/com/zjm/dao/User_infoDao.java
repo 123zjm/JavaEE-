@@ -47,7 +47,7 @@ public interface User_infoDao {
 	 * @return
 	 * @throws Exception
 	 */
-	List findUsers_type() throws Exception;
+	List findUsers_type(int size) throws Exception;
 	/**
 	 * 更改用户状态
 	 * @return
@@ -78,4 +78,10 @@ public interface User_infoDao {
 	 * @throws Exception
 	 */
 	int updateUser_info(String info_nickname,String info_phone,String info_email,Integer info_gender,String info_address)throws Exception;
+	/**
+	 * 获取页码
+	 * @return
+	 * @throws Exception
+	 */
+	int selectPageSize()throws Exception;
 }

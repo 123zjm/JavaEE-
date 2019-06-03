@@ -41,7 +41,7 @@ public interface User_infoService {
 	 * 获取用户状态
 	 * @return
 	 */
-	List  getUser_type();
+	List  getUser_type(int size);
 	
 	/**
 	 * 更改用户状态
@@ -71,4 +71,10 @@ public interface User_infoService {
 	 * @return
 	 */
 	int changeUser_info(String info_nickname,String info_phone,String info_email,Integer info_gender,String info_address);
+	/**
+	 * 获取页码
+	 * @return
+	 * @throws Exception
+	 */
+	int getPageSize();
 }

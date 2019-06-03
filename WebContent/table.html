@@ -11,13 +11,14 @@
 </head>
 
 <body>
-	<div><button id="delete">删除</button></div><div><button id="update">修改</button></div>
-	<table id="table">
-		<tr><td><input type=checkbox id="input" checked ></td><td field=ck checkbox=true></td><td width="100px">昵称</td><td width="100px">电话</td><td width="100px">邮箱</td><td width="100px">性别</td><td width="100px">地址</td><td width="100px">操作</td></tr>
+<div>
+	<div><button id="delete">删除</button><button id="update">修改</button><input type="text" id="input02" ><button id="tiaozhuan">跳转</button></div>
+	<table id="table" border="1">
+		<tr><td><input type=checkbox id="input" checked ></td><td width="100px">昵称</td><td width="100px">电话</td><td width="100px">邮箱</td><td width="100px">性别</td><td width="100px">地址</td><td width="100px">操作</td></tr>
 	</table>
-     
+     <div><button id="frist">首页</button><button id="pre">上一页</button><spen id="PageSize"></spen><button id="next">下一页</button><button id="last">尾页</button></div>
           
-
+</div>
 
 </body>
 
@@ -26,23 +27,35 @@
  <script src="js/jquery-3.4.1.min.js" charset="utf-8"></script>
 
 <script type="text/javascript">
+var countSize=0;//总页数
+var size=0;//当前页
 $(function(){
-		//导入数据
+	
+		//加载数据
+		getPageSize(1);
+		
+		//分页按钮
 		$.ajax({
 			type:"get",
-			url:"table/get",
+			url:"table/getPageSize",
 			async:false,
 			success:function(data){
-				var a=$.parseJSON(data);
-				for(var b=0;b<a.length;b++){
-					if(a[b].user_type == 1){
-						$("#table").append("<tr><td><input type=checkbox  class=dochange value="+a[b].info_nickname+"></td><td>"+a[b].info_nickname+"</td><td>"+a[b].info_phone+"</td><td>"+a[b].info_email+"</td><td>"+a[b].info_gender+"</td><td>"+a[b].info_address+"</td><td><button class= 'id'>禁用</button></td></tr>")
-					}else{
-						$("#table").append("<tr><td><input type=checkbox  class=dochange value="+a[b].info_nickname+"></td><td >"+a[b].info_nickname+"</td><td>"+a[b].info_phone+"</td><td>"+a[b].info_email+"</td><td>"+a[b].info_gender+"</td><td>"+a[b].info_address+"</td><td><button class= 'id'>启用</button></td></tr>")
-					}
+				countSize=data;
+				for(var i=0;i<data;i++){
+					$("#PageSize").append("<button class='size'>"+(i+1)+"</button>");
 				}
+				
 			}
 		})
+		
+		//按钮点击
+				$(".size").on('click',function(){
+				
+					var sz=$(this).html();
+					//加载数据
+					getPageSize(sz);
+				})
+		
 		//禁用和启用的刷新
 		$(".id").on('click', function(){
 			var username=$(this).parent().parent().children().first().next().html();
@@ -71,6 +84,7 @@ $(function(){
 			$(".dochange").each(function() {
 				if($(this).prop("checked")==true){
 					var username=$(this).parent().parent().children().first().next().html();
+					var dele=$(this).parent().parent();
 					$.ajax({
 						type:"get",
 						url:"table/dele",
@@ -79,7 +93,8 @@ $(function(){
 						success:function(data){
 							//window.location.replace();js页面刷新
 							if(data>0){
-								window.location.href = 'table.html';}
+								$(dele).remove();
+								}
 							}
 					})
 				}
@@ -112,14 +127,68 @@ $(function(){
 		});
 		
 	
+		//首页
+		$("#frist").on('click',function(){
+			if(size != 1){
+				getPageSize(1);
+			}
+		})
+		//尾页
+		$("#last").on('click',function(){
+			if(size != countSize){
+				getPageSize(countSize);
+			}
+		})
 		
+		//上一页
+		$("#pre").on('click',function(){
+			if(size > 1){
+				getPageSize(size-1);
+			}
+		})
 		
+		//下一页
+		$("#next").on('click',function(){
+			if(size < countSize){
+				getPageSize(size+1);
+			}
+		})
 		
+		//跳转
+		$("#tiaozhuan").on('click',function(){
+			var tiaozhuanye=$("#input02").val();
+			if(tiaozhuanye<=countSize&&tiaozhuanye>0){
+				getPageSize(tiaozhuanye);
+			}
+		})
 		
 	})
 	
 	
-
+	//导入数据方法
+	function getPageSize(sz){
+		//导入数据
+		if( size != sz){
+		$("#table tr:gt(0)").remove();
+		   size=sz;
+			$.ajax({
+				type:"get",
+				url:"table/get",
+				async:false,
+				data:"size="+sz,
+				success:function(data){
+					var a=$.parseJSON(data);
+					for(var b=0;b<a.length;b++){
+						if(a[b].user_type == 1){
+							$("#table").append("<tr><td><input type=checkbox  class=dochange value="+a[b].info_nickname+"></td><td>"+a[b].info_nickname+"</td><td>"+a[b].info_phone+"</td><td>"+a[b].info_email+"</td><td>"+a[b].info_gender+"</td><td>"+a[b].info_address+"</td><td><button class= 'id'>禁用</button></td></tr>")
+						}else{
+							$("#table").append("<tr><td><input type=checkbox  class=dochange value="+a[b].info_nickname+"></td><td >"+a[b].info_nickname+"</td><td>"+a[b].info_phone+"</td><td>"+a[b].info_email+"</td><td>"+a[b].info_gender+"</td><td>"+a[b].info_address+"</td><td><button class= 'id'>启用</button></td></tr>")
+						}
+					}
+				}
+			})
+		}
+	}
 </script>
 
 </html>
