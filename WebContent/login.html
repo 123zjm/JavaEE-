@@ -5,9 +5,14 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="layui-v2.4.5/css/layui.css">
 </head>
+<style>
+body {
+	background-image: url("img/1.jpg");
+}
+</style>
 <body>
 	
-		<div style="width: 500px; position:absolute;top: 50px;left: 100px ">
+		<div style="width: 500px; position:absolute;top: 30%;left: 30%  ">
 			
 			<div class="layui-form-item">
 			<span id="yanzheng"   style="color: red;"></span>
@@ -31,8 +36,9 @@
 			<div class="layui-form-item">
 				<div class="layui-input-block">
 					<button class="layui-btn" lay-filter="demo1" onclick="login()">登录</button>
+					<button class="layui-btn" lay-filter="demo1" onclick="zdlogin()">自动登录</button>
 				</div>
-				<div class="layui-input-block" style="position: relative;left: 20%;top:-38px">
+				<div class="layui-input-block" style="position: relative;left: 40%;top:-38px">
 					<button class="layui-btn" lay-filter="demo1" onclick="regist()">
 						注册
 					</button>
@@ -55,12 +61,11 @@
         // 如果需要在当前窗口打开登录界面
         window.location.href = 'registr.html';
     }
-    
-    function login() {
-    	var username=document.getElementById("username");
+  
+    function login(username,password) {
+      	var username=document.getElementById("username");
     	var password=document.getElementById("password");
     	var unameMsg=document.getElementById("unameMsg");
-    	
     	$.ajax({
 			type:"post",
 			url:"nb",
@@ -71,6 +76,36 @@
 					 window.location.href = 'table.html';
 				}else{
 					yanzheng.innerHTML="*用户名或密码错误";
+				}
+			}
+		})
+    }
+    //自动登录
+    function zdlogin() {
+    	$.ajax({
+			type:"post",
+			url:"table/login",
+			async:false,
+			success:function(id){
+				if(id != 1){
+					var a = id.split("/");
+					var username =a[0];
+					var password=a[1];
+					$.ajax({
+						type:"post",
+						url:"nb",
+						async:false,
+						data:"username="+username.value+"&password="+password.value,
+						success:function(id){
+							if(id != 0){
+								 window.location.href = 'table.html';
+							}else{
+								yanzheng.innerHTML="*用户名或密码错误";
+							}
+						}
+					})
+				}else{
+					yanzheng.innerHTML="*还没进行过登录";
 				}
 			}
 		})
@@ -106,7 +141,7 @@ $(function(){
 		}
 	}
 	
-	
+	zdlogin();
 	})
 </script>
 </html>

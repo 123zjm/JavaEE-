@@ -61,7 +61,7 @@ $().ready(function(){
 		async:false,
 		success:function(username){
 			if(username == null){
-				window.location.href = 'login.html';
+				window.location.href = "login.html";
 			}else{
 				$("#yonghu").text(username+"用户");
 				$.ajax({
@@ -70,12 +70,16 @@ $().ready(function(){
 					async:false,
 					// success:function(data,ms){} ajax可以返回多个数据，按位置判断响应值
 					success:function(data){
-						var a=$.parseJSON(data);
-						$("#name").text(a.info_nickname);
-						$("#phone").text(a.info_phone);
-						$("#emile").text(a.info_email);
-						$("#gende").text(a.info_gender);
-						$("#address").text(a.info_address);
+						if(data != 1){
+							var a=$.parseJSON(data);
+							$("#name").text(a.info_nickname);
+							$("#phone").text(a.info_phone);
+							$("#emile").text(a.info_email);
+							$("#gende").text(a.info_gender);
+							$("#address").text(a.info_address);
+						}else{
+							window.location.href = "login.html";
+						}
 						
 						//var a=new array();
 						// a= data.spil(",");

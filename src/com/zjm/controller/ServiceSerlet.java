@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -95,6 +96,19 @@ public class ServiceSerlet extends HttpServlet{
 				writer.print(pageSize);
 			}else {
 				writer.print("数据异常");
+			}
+		}else if("login".equals(operation)) {
+			Cookie[] cookies = req.getCookies();
+			String password=null;
+			String username=null;
+			if(cookies != null) {
+				for (Cookie cookie : cookies) {
+					username = cookie.getName();
+					password = cookie.getValue();
+					writer.print(username+"/"+password);
+				}
+			}else {
+				writer.print(1);
 			}
 		}
 	}

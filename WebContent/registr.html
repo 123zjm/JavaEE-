@@ -5,12 +5,17 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="layui-v2.4.5/css/layui.css">
 </head>
+<style>
+body {
+	background-image: url("img/2.jpg");
+}
+</style>
 <body>
 	<form class="layui-form" action="wm" method="get" lay-filter="example">
-		<div style="width: 500px; position:absolute;top: 50px;left: 100px ">
+		<div style="width: 500px; position:absolute;top: 30%;left: 30%  ">
 
 			<div class="layui-form-item">
-				<label class="layui-form-label">账号框</label>
+				<label class="layui-form-label" style="color: red;">账号框</label>
 				<div class="layui-input-block">
 					<input id="username" name="username" class="layui-input" type="text"
 						placeholder="请输入账号" autocomplete="off" lay-verify="title" required="required">
@@ -18,7 +23,7 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label">密码框</label>
+				<label class="layui-form-label" style="color: red;">密码框</label>
 				<div class="layui-input-block">
 					<input name="password" class="layui-input" type="password"
 						placeholder="请输入密码" id="mima" autocomplete="off" required="required">
@@ -26,7 +31,7 @@
 			</div>
 			
 			<div class="layui-form-item">
-				<label class="layui-form-label">再次输入密码框</label>
+				<label class="layui-form-label" style="color: red;">再次输入密码框</label>
 				<div class="layui-input-block">
 					<input name="password02" class="layui-input" type="password"
 						placeholder="请再次输入密码" autocomplete="off" required="required" id="yanzheng" >

@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,7 +38,11 @@ public class LoginServlet extends HttpServlet{
 		users.setUser_pwd(pwd);
 		//响应输出
 		PrintWriter out= resp.getWriter();
-		//通过session进行页面信息的本地储存
+		//创建一个cookie来存在，达到自动登录   和session的区别在于，cookie可以存给定天数
+		Cookie cookie = new Cookie(username, pwd);
+		cookie.setMaxAge(24*60*60);
+		resp.addCookie(cookie);
+		//通过session进行页面信息的本地储存  关闭浏览器即销毁
 		HttpSession session = req.getSession();
 		//获取的值
 		session.setAttribute("users",users);

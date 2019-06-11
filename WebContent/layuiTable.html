@@ -1,122 +1,416 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="layui-v2.4.5/css/layui.css?t=1554901098009" media="all">
-  <style>
-    body{margin: 10px;}
-    .demo-carousel{height: 200px; line-height: 200px; text-align: center;}
-  </style>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<title>layui</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="layui-v2.4.5/css/layui.css" media="all">
+<!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
+<style>
+body {
+	width: 100%;
+	height: 100%;
+}
+
+.login-panel {
+	width: 500px;
+	height: 500px;
+	background-color: #fff;
+	border-radius: 4px;
+	margin: 0 auto;
+	top: 50%;
+	margin-top: -150px;
+	position: relative;
+}
+
+.elastic-layer {
+	background: rgba(0, 0, 0, 0.2);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+}
+
+input {
+	display: inline-block;
+	width: 200px;
+	height: 30px;
+	border-radius: 4px;
+	margin: 0 auto;
+	margin-top: 10px;
+}
+
+.content {
+	padding: 5rem;
+	text-align: center;
+}
+
+.close {
+	display: none;
+}
+
+.blur {
+	filter: blur(2px);
+	-webkit-filter: blur(2px);
+}
+
+.btn-blur {
+	cursor: pointer;
+	background-color: #f63;
+	display: block;
+	margin: 0 auto;
+}
+
+.demo_line_01 {
+	padding: 0 20px 0;
+	margin: 20px 0;
+	text-align: center;
+}
+</style>
 <body>
- 
-<table class="layui-hide" id="demo" lay-filter="test"></table>
- 
-<script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">禁用</a>
-  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</script>
- 
+	<section class="content">
+		<div class="demo_line_01">
+			<div>
+				<button id="delete">删除</button>
+				<button id="update">修改</button>
+				<input type="text" id="input02">
+				<button id="tiaozhuan">跳转</button>
+				<button class="btn-blur">新增</button>
+			</div>
 
+			<table id="table" border="1" style="">
+				<tr>
+					<td><input type=checkbox id="input" checked></td>
+					<td width="100px">昵称</td>
+					<td width="100px">电话</td>
+					<td width="100px">邮箱</td>
+					<td width="100px">性别</td>
+					<td width="100px">地址</td>
+					<td width="100px">操作</td>
+				</tr>
+			</table>
 
-<blockquote class="layui-elem-quote layui-quote-nm layui-hide" id="footer">layui {{ layui.v }} 提供强力驱动</blockquote>
+			<div>
+				<button id="frist">首页</button>
+				<button id="pre">上一页</button>
+				<spen id="PageSize"></spen>
+				<button id="next">下一页</button>
+				<button id="last">尾页</button>
+			</div>
 
-  
-<script src="layui-v2.4.5/layui.js?t=1554901098009"></script>
-<script>
-layui.config({
-  version: '1554901098009' //为了更新 js 缓存，可忽略
-});
- 
-layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
-  var laydate = layui.laydate //日期
-  ,laypage = layui.laypage //分页
-  ,layer = layui.layer //弹层
-  ,table = layui.table //表格
-  ,carousel = layui.carousel //轮播
-  ,upload = layui.upload //上传
-  ,element = layui.element //元素操作
-  ,slider = layui.slider //滑块
-  
-  //监听Tab切换
-  element.on('tab(demo)', function(data){
-    layer.tips('切换了 '+ data.index +'：'+ this.innerHTML, this, {
-      tips: 1
-    });
-  });
-  
-  //执行一个 table 实例
-  table.render({
-    elem: '#demo'
-    ,height: 420
-    ,url: 'table/find' //数据接口
-    ,title: '用户表'
-    ,page: true //开启分页
-    ,toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
-    //,totalRow: true //开启合计行
-    ,cols: [[ //表头
-    	{type: 'checkbox', fixed: 'left'}
-      ,{field: 'info_nickname', title: '昵称', width:80, sort: true, fixed: 'left'}
-      ,{field: 'info_phone', title: '电话', width:80, sort: true, fixed: 'left'}
-      ,{field: 'info_email', title: '电子邮箱', width:80}
-      ,{field: 'info_gender', title: '性别', width: 90, sort: true, totalRow: true}
-      ,{field: 'info_address', title: '地址', width:80, sort: true}
-      ,{fixed: 'right', width: 165, align:'center', toolbar: '#barDemo'}
-    ]]
-  });
-  
-  //监听头工具栏事件
-  table.on('toolbar(test)', function(obj){
-    var checkStatus = table.checkStatus(obj.config.id)
-    ,data = checkStatus.data; //获取选中的数据
-    switch(obj.event){
-      case 'add':
-       $.ajas({
-    	   
-       })
-      break;
-      case 'update':
-        if(data.length === 0){
-          layer.msg('请选择一行');
-        } else if(data.length > 1){
-          layer.msg('只能同时编辑一个');
-        } else {
-          layer.alert('编辑 [user的昵称]：'+ checkStatus.data[0].info_nickname);
-        }
-      break;
-      case 'delete':
-        if(data.length === 0){
-          layer.msg('请选择一行');
-        } else {
-          layer.msg('删除');
-        }
-      break;
-    };
-  });
-  
-  //监听行工具事件
-  table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-    var data = obj.data //获得当前行数据
-    ,layEvent = obj.event; //获得 lay-event 对应的值
-    if(layEvent === 'detail'){
-      //layer.msg('查看操作');弹窗
-      
-    } else if(layEvent === 'del'){
-      layer.confirm('真的删除行么', function(index){
-        obj.del(); //删除对应行（tr）的DOM结构
-        layer.close(index);
-        //向服务端发送删除指令
-      });
-    } else if(layEvent === 'edit'){
-      layer.msg('编辑操作');
-    }
-  });
-  
+		</div>
+	</section>
+	<section class="elastic-layer close">
+		<div class="login-panel" >
+	
+			
+			<div class="layui-form-item">
+				昵称
+				
+					<input name="info_nickname" class="layui-input" type="text"
+						placeholder="请输入昵称" autocomplete="off" lay-verify="title" required="required">
+				
+			</div>
+			<div class="layui-form-item">
+				手机号码
+				
+					<input name="info_phone" class="layui-input" type="test"
+						placeholder="请输入手机号码"  autocomplete="off" required="required">
+				
+			</div>
+			
+			<div class="layui-form-item">
+				邮箱
+				
+					<input name="info_email" class="layui-input" type="email"
+						placeholder="请输入邮箱" autocomplete="off" required="required"  >
+						<span id="tishi"></span>
+				
+			</div>
+			
+			<div class="layui-form-item">
+				性别
+				
+					<input name="info_gender"  type="radio"
+						 value="0">男
+						 <input name="info_gender"  type="radio"
+						 value="1">女
+				
+			</div>
+			
+			<div class="layui-form-item">
+			地址
+				
+					<input name="info_address" class="layui-input" type="test"
+						placeholder="请输入地址" autocomplete="off" required="required"  >
+						<span id="tishi"></span>
+				
+			</div>
+			
+			<div class="layui-form-item">
+				
+					<button class="layui-btn" lay-filter="demo1" lay-submit="">提交</button>
+			
+			</div>
 
-
-});
-</script>
+		</div>
+	</section>
 </body>
-</html>        
+
+<script src="layui-v2.4.5/layui.all.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script src="js/jquery-3.4.1.min.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+	var countSize = 0;//总页数
+	var size = 0;//当前页
+	$(function() {
+
+		//加载数据
+		getPageSize(1);
+
+		//分页按钮
+		$.ajax({
+			type : "get",
+			url : "table/getPageSize",
+			async : false,
+			success : function(data) {
+				countSize = data;
+				for (var i = 0; i < data; i++) {
+					$("#PageSize").append(
+							"<button class='size'>" + (i + 1) + "</button>");
+				}
+
+			}
+		})
+
+		//按钮点击
+		$(".size").on('click', function() {
+
+			var sz = $(this).html();
+			//加载数据
+			getPageSize(sz);
+		})
+
+		//禁用和启用的刷新
+		$(".id").on(
+				'click',
+				function() {
+					var username = $(this).parent().parent().children().first()
+							.next().html();
+					$.ajax({
+						type : "get",
+						url : "table/change",
+						data : "username=" + username,
+						async : false,
+						success : function(data) {
+							//window.location.replace();js页面刷新
+							window.location.href = 'table.html';
+						}
+					})
+				});
+		//全选，反选
+		$("#input").on('click', function() {
+			if ($("#input").attr("checked") == "checked") {
+				$("input[type='checkbox']").prop("checked", function(i, val) {
+					return !val;
+				});
+			}
+		});
+		//点击删除按钮，删除指定数据
+		$("#delete").click(
+				function() {
+					//遍历
+					$(".dochange").each(
+							function() {
+								if ($(this).prop("checked") == true) {
+									var username = $(this).parent().parent()
+											.children().first().next().html();
+									var dele = $(this).parent().parent();
+									$.ajax({
+										type : "get",
+										url : "table/dele",
+										data : "username=" + username,
+										async : false,
+										success : function(data) {
+											//window.location.replace();js页面刷新
+											if (data > 0) {
+												$(dele).remove();
+											}
+										}
+									})
+								}
+							})
+				});
+
+		//点击修改按钮，修改指定数据
+		$("#update")
+				.click(
+						function() {
+
+							$(".dochange")
+									.each(
+											function() {
+												if ($(this).prop("checked") == true) {
+													var username = $(this)
+															.parent().parent()
+															.children().first()
+															.next().html();
+													$
+															.ajax({
+																type : "get",
+																url : "table/update",
+																data : "username="
+																		+ username,
+																async : false,
+																success : function(
+																		data) {
+																	//window.location.replace();js页面刷新
+																	if (data == 1) {
+																		$(".class").val("");
+																	}
+																}
+															})
+												}
+
+											})
+
+						});
+
+		//首页
+		$("#frist").on('click', function() {
+			if (size != 1) {
+				getPageSize(1);
+			}
+		})
+		//尾页
+		$("#last").on('click', function() {
+			if (size != countSize) {
+				getPageSize(countSize);
+			}
+		})
+
+		//上一页
+		$("#pre").on('click', function() {
+			if (size > 1) {
+				getPageSize(size - 1);
+			}
+		})
+
+		//下一页
+		$("#next").on('click', function() {
+			if (size < countSize) {
+				getPageSize(size + 1);
+			}
+		})
+
+		//跳转
+		$("#tiaozhuan").on('click', function() {
+			var tiaozhuanye = $("#input02").val();
+			if (tiaozhuanye<=countSize&&tiaozhuanye>0) {
+				getPageSize(tiaozhuanye);
+			}
+		})
+
+	})
+
+	//新增按钮，页面弹出
+	$("#add").on('click', function() {
+		var name = prompt("请输入姓名", "");
+		var gender = prompt("请输入性别", "");
+		var telephone = prompt("请输入电话", "");
+		var address = prompt("请输入地址", "");
+	})
+
+	//导入数据方法
+	function getPageSize(sz) {
+		//导入数据
+		if (size != sz) {
+			$("#table tr:gt(0)").remove();
+			size = sz;
+			$
+					.ajax({
+						type : "get",
+						url : "table/get",
+						async : false,
+						data : "size=" + sz,
+						success : function(data) {
+							var a = $.parseJSON(data);
+							for (var b = 0; b < a.length; b++) {
+								if (a[b].user_type == 1) {
+									$("#table")
+											.append(
+													"<tr><td><input type=checkbox  class=dochange value="+a[b].info_nickname+"></td><td>"
+															+ a[b].info_nickname
+															+ "</td><td>"
+															+ a[b].info_phone
+															+ "</td><td>"
+															+ a[b].info_email
+															+ "</td><td>"
+															+ a[b].info_gender
+															+ "</td><td>"
+															+ a[b].info_address
+															+ "</td><td><button class= 'id'>禁用</button></td></tr>")
+								} else {
+									$("#table")
+											.append(
+													"<tr><td><input type=checkbox  class=dochange value="+a[b].info_nickname+"></td><td >"
+															+ a[b].info_nickname
+															+ "</td><td>"
+															+ a[b].info_phone
+															+ "</td><td>"
+															+ a[b].info_email
+															+ "</td><td>"
+															+ a[b].info_gender
+															+ "</td><td>"
+															+ a[b].info_address
+															+ "</td><td><button class= 'id'>启用</button></td></tr>")
+								}
+							}
+						}
+					})
+		}
+	}
+</script>
+<script>
+	$(function() {
+		$('.btn-blur').on('click', function() {
+			$('.content').addClass('blur');
+			$('.elastic-layer').removeClass('close');
+			event.stopPropagation();
+		});
+
+		$(".login-panel").on('click', function() {
+			event.stopPropagation();
+		});
+
+		$('body').on('click', function() {
+			$('.content').removeClass('blur');
+			$('.elastic-layer').addClass('close');
+		});
+
+	});
+</script>
+<script>
+	$().ready(function() {
+		$.ajax({
+			type : "post",
+			url : "wa",
+			async : false,
+			success : function(username) {
+				if (username == null) {
+					window.location.href = 'login.html';
+				} else {
+					$("#yonghu").text(username + "用户");
+				}
+			}
+		})
+	})
+</script>
+</html>
